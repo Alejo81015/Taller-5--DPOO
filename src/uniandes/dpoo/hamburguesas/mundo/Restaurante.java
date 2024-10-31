@@ -96,14 +96,17 @@ public class Restaurante
      * @throws NoHayPedidoEnCursoException Lanza esta excepción si no hay un pedido en curso
      * @throws FileNotFoundException Lanza esta excepción si hay problemas guardando el archivo
      */
-    public void cerrarYGuardarPedido( ) throws NoHayPedidoEnCursoException, IOException
-    {
-        if( pedidoEnCurso == null )
-            throw new NoHayPedidoEnCursoException( );
-
-        String nombreArchivo = PREFIJO_FACTURAS + pedidoEnCurso.getIdPedido( ) + ".txt";
-        pedidoEnCurso.guardarFactura( new File( CARPETA_FACTURAS + nombreArchivo ) );
-        pedidoEnCurso = null;
+    public void cerrarYGuardarPedido() throws NoHayPedidoEnCursoException, IOException {
+        if (pedidoEnCurso == null)
+            throw new NoHayPedidoEnCursoException();
+        File carpetaFacturas = new File(CARPETA_FACTURAS);
+        if (!carpetaFacturas.exists()) {
+            carpetaFacturas.mkdirs();
+        }
+        String nombreArchivo = PREFIJO_FACTURAS + pedidoEnCurso.getIdPedido() + ".txt";
+        pedidoEnCurso.guardarFactura(new File(carpetaFacturas, nombreArchivo));
+        pedidos.add(pedidoEnCurso);
+        pedidoEnCurso = null; 
     }
 
     /**
@@ -172,7 +175,7 @@ public class Restaurante
         cargarCombos( archivoCombos );
     }
 
-    private void cargarIngredientes( File archivoIngredientes ) throws IngredienteRepetidoException, IOException
+    public void cargarIngredientes( File archivoIngredientes ) throws IngredienteRepetidoException, IOException
     {
         BufferedReader reader = new BufferedReader( new java.io.FileReader( archivoIngredientes ) );
         try
@@ -209,7 +212,7 @@ public class Restaurante
         }
     }
 
-    private void cargarMenu( File archivoMenu ) throws ProductoRepetidoException, IOException
+    public void cargarMenu( File archivoMenu ) throws ProductoRepetidoException, IOException
     {
         BufferedReader reader = new BufferedReader( new java.io.FileReader( archivoMenu ) );
         try
@@ -246,7 +249,7 @@ public class Restaurante
         }
     }
 
-    private void cargarCombos( File archivoCombos ) throws ProductoRepetidoException, ProductoFaltanteException, IOException
+    public void cargarCombos( File archivoCombos ) throws ProductoRepetidoException, ProductoFaltanteException, IOException
     {
         BufferedReader reader = new BufferedReader( new java.io.FileReader( archivoCombos ) );
         try
