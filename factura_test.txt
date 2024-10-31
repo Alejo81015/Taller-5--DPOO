@@ -1,0 +1,12 @@
+Cliente: Julio Iglesias
+Dirección: Carrea 1 #18a-10
+----------------
+Malteada
+            10000
+Combo SENECA
+ Descuento: 0.2
+            12800
+----------------
+Precio Neto:  22800
+IVA:          4332
+Precio Total: 27132
